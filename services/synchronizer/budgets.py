@@ -1,6 +1,5 @@
 import datetime, requests
-
-SQLALCHEMY_DATABASE_URI = 'sqlite:////my/sqlite/path/'
+from pymongo import MongoClient
 
 
 class ListOfBudgets:
@@ -8,6 +7,9 @@ class ListOfBudgets:
     def __init__(self, host, offset):
         self.host = host
         self.offset = offset
+        self.client = MongoClient('mongo_db_qabox', 27021)
+        self.db = self.client.budgets
+        self.budgets = self.db.budgets
 
     def get_latest_budgets(self):
         resp = requests.get(url=f'{self.host}?offset={self.offset}').json()
@@ -35,6 +37,7 @@ class ListOfBudgets:
                     print(r['compiledRelease']['relatedProcesses'][0]['identifier'])
                     print(r['ocid'])
                     print(r)
+                    self.budgets.insert_one(r)
                 # Record to EI table
                 else:
                     ocid = r['ocid']

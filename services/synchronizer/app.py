@@ -2,8 +2,11 @@ from flask import Flask
 from apscheduler.schedulers.background import BackgroundScheduler
 from budgets import ListOfBudgets
 from config import host, offset
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://mongo_db:27021/budgets"
+mongo = PyMongo(app)
 
 
 def add_budgets_to_db():
@@ -24,4 +27,4 @@ def home_page():
 
 if __name__ == '__main__':
     app.debug = True
-    app.run(host="127.0.0.1")
+    app.run(host="0.0.0.0")
