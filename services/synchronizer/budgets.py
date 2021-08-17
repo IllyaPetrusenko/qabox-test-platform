@@ -1,4 +1,5 @@
 import datetime, requests
+from flask_pymongo import PyMongo
 from pymongo import MongoClient
 
 
@@ -32,17 +33,11 @@ class ListOfBudgets:
             for r in release['records']:
                 # Record to FS table
                 if "FS" in r['ocid']:
-                    ocid = r['ocid']
-                    cpid = r['compiledRelease']['relatedProcesses'][0]['identifier']
-                    print(r['compiledRelease']['relatedProcesses'][0]['identifier'])
-                    print(r['ocid'])
                     print(r)
                     self.budgets.insert_one(r)
                 # Record to EI table
                 else:
-                    ocid = r['ocid']
-                    cpid = r['ocid']
-                    json_data = r
-                    date = (datetime.datetime.now()).strftime("%Y-%m-%dT%H:%M:%S.000Z")
+                    print(r)
+                    self.budgets.insert_one(r)
         return 'Operation complete'
 
