@@ -12,19 +12,19 @@ services:
     environment:
       - FLASK_ENV=development
     depends_on:
-      - sqlite3
+      - postgresql
     networks:
       - samplenetwork
 
-  sqlite3:
-    image: nouchka/sqlite3:latest
-    container_name: "sqlite3"
+  postgresql:
+    image: postgres
+    container_name: "postgresql"
     ports:
       - "27021:27021"
-    stdin_open: true
-    tty: true
-    volumes:
-      - ./db/:/root/db/
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: admin
     networks:
       - samplenetwork
 
