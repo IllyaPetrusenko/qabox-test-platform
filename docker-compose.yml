@@ -12,19 +12,16 @@ services:
     environment:
       - FLASK_ENV=development
     depends_on:
-      - postgresql
+      - mongo_db_qabox
     networks:
       - samplenetwork
 
-  postgresql:
-    image: postgres
-    container_name: "postgresql"
+  mongo_db_qabox:
+    image: mongo:4.0.11
+    container_name: "mongo_db_qabox"
     ports:
       - "27021:27021"
-    restart: always
-    environment:
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_USER: admin
+    command: mongod --bind_ip_all --port 27017 --smallfiles --logpath=/dev/null # --quiet
     networks:
       - samplenetwork
 
