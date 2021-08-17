@@ -21,7 +21,7 @@ services:
     container_name: "mongo_db_qabox"
     ports:
       - "27021:27021"
-    command: mongod --bind_ip_all --port 27017 --smallfiles --logpath=/dev/null # --quiet
+    command: mongod --bind_ip_all --port 27021 --smallfiles --logpath=/dev/null # --quiet
     networks:
       - samplenetwork
 
